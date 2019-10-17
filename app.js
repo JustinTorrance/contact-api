@@ -28,7 +28,7 @@ app.delete('/api/v1/contacts/:id', (request, response) => {
       .where('id', request.params.id)
       .del()
       .then(() => {
-        response.json(`Successfully deleted contact ${idForDelete}`)
+        response.json(`Successfully deleted contact`)
       })
       .catch(error => {
         response.status(500).json({ error })
@@ -48,23 +48,16 @@ app.post('/api/v1/contacts', (request, response) => {
 })
 
 app.put('/api/v1/contacts/:id', (request, response) => {
-  const { first_name, last_name, phone, email } = request.body
+  const { first_name, last_name, phone_num, email } = request.body
   database('contacts')
     .where('id', request.params.id)
-    .update({ first_name, last_name, phone, email })
-      .then(contact => {
-        response.status(200).json(`Contact for ${first_name} has been updated`)
+    .update({ first_name, last_name, phone_num, email })
+      .then(() => {
+        response.status(200).json(`Contact for ${first_name} ${last_name} has been updated`)
       })
       .catch(error => {
-        response.status(422).json({ error })
+        response.status(500).json({ error })
       })
 })
-
-
-
-
-
-
-
 
 module.exports = app
