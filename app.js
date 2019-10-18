@@ -28,7 +28,7 @@ app.delete('/api/v1/contacts/:id', (request, response) => {
       .where('id', request.params.id)
       .del()
       .then(() => {
-        response.json(`Successfully deleted contact`)
+        response.status(204).json(`Successfully deleted contact`)
       })
       .catch(error => {
         response.status(500).json({ error })
@@ -39,7 +39,7 @@ app.delete('/api/v1/contacts/:id', (request, response) => {
 app.post('/api/v1/contacts', (request, response) => {
   const contact = request.body
   database('contacts').insert(contact)
-    .then(projects => {
+    .then(() => {
       response.status(201).json('Contact successfully added')
     })
     .catch(error => {
